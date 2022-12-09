@@ -1,1 +1,5 @@
 REVERSE_GEOCODE_URL = "https://api.bigdatacloud.net/data/reverse-geocode"
+LATITUDE            = "latitude"
+LONGITUDE           = "longitude"
+LANG                = "localityLanguage"
+TOKEN               = "key"

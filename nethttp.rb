@@ -1,4 +1,5 @@
 require 'uri'
+require 'json'
 require 'net/http'
 
 class HttpRequest
@@ -7,6 +8,7 @@ class HttpRequest
   end
 
   def get_response
-    return Net::HTTP.get(@uri)
+    response = Net::HTTP.get(@uri)
+    JSON.parse(response)
   end
 end

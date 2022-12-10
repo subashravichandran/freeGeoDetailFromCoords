@@ -9,10 +9,11 @@ class ConfigSetup
         auth_key_file_path = gets.chomp
         new_contents = File.read(CONSTANTS_PATH).gsub(/^AUTH_KEY.*$/, "AUTH_KEY = '#{auth_key_file_path}'")
         File.open(CONSTANTS_PATH, 'w'){|file| file.puts new_contents; file.close}
+        puts "Configuration done with the provided API key.\nAuth-Key saved to #{CONSTANTS_PATH}"
       else
         puts "Using existing API key in #{CONSTANTS_PATH}"
       end
-      require './constants'
+      require CONSTANTS_PATH
     end
   end
 end

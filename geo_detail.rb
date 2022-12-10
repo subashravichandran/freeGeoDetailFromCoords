@@ -6,13 +6,13 @@ class GeoDetail
   @cache_mem = Cache.new()
   class << self
     def reverse_geocode(latitude, longitude)
-      puts AUTH_KEY
       cached_response = @cache_mem.read_cache(latitude.to_s + longitude.to_s)
-      if cached_response.nil?
+      if cached_response.nil? || cached_response["localityInfo"].nil?
         response = HttpRequest.new(url: REVERSE_GEOCODE_URL, _lat: latitude, _lng: longitude).get_response
         @cache_mem.write_cache(latitude.to_s + longitude.to_s, response)
         return response
       end
+      puts "Fetched from Cache"
       return cached_response
     end
 

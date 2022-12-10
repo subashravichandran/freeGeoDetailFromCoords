@@ -6,21 +6,21 @@ class Cache
   def cache(cache_key, cache_value=nil)
     return @cache[cache_key.to_sym] if @cache.keys.include?(cache_key.to_sym)
     unless cache_value.nil?
-      p 'reset list_all-keys'
       @all_keys = nil
       @cache[cache_key.to_sym] = cache_value
     end
   end
 
   def list_all_keys
-    # TODO To be reused for searching cache based on a key
     @all_keys ||= @cache.keys
   end
 
   def list_cache(identifier)
     case
-    when !identifier.nil? && ['keys', 'k', 'key'].include?(identifier.downcase) then list_all_keys 
-    else @cache
+    when identifier.nil?                                then @cache
+    when identifier == '*'                              then list_all_keys 
+    when identifier.size > 1 && identifier.match?(/\*/) then @cache.keys.select{|key| key.to_s.include?(identifier.gsub(/\*/, ''))}
+    else @cache[identifier.to_s.to_sym]
     end
   end
 

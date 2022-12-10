@@ -20,7 +20,7 @@ class HttpRequest
       LATITUDE.to_sym => @_lat,
       LONGITUDE.to_sym => @_lng,
       LANG.to_sym => 'en',
-      TOKEN.to_sym => 'dc_92b3d83c21844674b1b5edb3969119f'
+      TOKEN.to_sym => AUTH_KEY.to_s
     }
   end
 end

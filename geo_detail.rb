@@ -1,20 +1,20 @@
 require './requirements'
 
 class GeoDetail
-  def initialize(latitude, longitude)
-    @cache     = {}
-    @latitude  = latitude
-    @longitude = longitude
-    @cache_key = latitude.to_s + longitude.to_s
-  end
+  @cache_mem = Cache.new()
+  class << self
+    def reverse_geocode(latitude, longitude)
+      cached_response = @cache_mem.read_cache(latitude.to_s + longitude.to_s)
+      if cached_response.nil?
+        response = HttpRequest.new(url: REVERSE_GEOCODE_URL_SAMPLE, _lat: latitude, _lng: longitude).get_response
+        @cache_mem.write_cache(latitude.to_s + longitude.to_s, response)
+        return response
+      end
+      return cached_response
+    end
 
-  def get_city_name_from_lat_lng
-    response = use_cache() || HttpRequest.new(url: REVERSE_GEOCODE_URL, _lat: @latitude, _lng: @longitude).get_response
-    use_cache(@cache_key, response)
-  end
-
-  def use_cache(cache_key, cache_value=nil)
-    return @cache[cache_key.to_sym] if @cache.keys.include?(cache_key.to_sym)
-    @cache[cache_key.to_sym] = cache_value if cache_value.nil?
+    def list_cache(identifier=nil)
+      @cache_mem.list_cache(identifier) 
+    end
   end
 end

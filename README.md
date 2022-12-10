@@ -2,6 +2,8 @@
   A simple Ruby script to reverse geocode. Capable of finding the basic details of a locality
   Simple hash used as cache storage (to prevent calling the API for same data - limits quota usage)
 
+  !!! For educational purpose
+
 DATA-SOURCE: www.bigdatacloud.com
 
 # Requirements:
